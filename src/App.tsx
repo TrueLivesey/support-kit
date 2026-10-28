@@ -82,7 +82,7 @@ function App() {
   return (
     <div className="app">
       <aside className="sidebar">
-        <a className="logo" href="/">
+        <a className="logo" href="/support-kit/#/">
           <span className="logo-icon">SK</span>
           <span>SupportKit</span>
         </a>
