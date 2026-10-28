@@ -1,0 +1,51 @@
+.log-formatter {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 35px;
+}
+.log-input-panel,
+.log-output-panel {
+  min-height: 470px;
+}
+.log-result {
+  flex: 1;
+  min-height: 300px;
+  white-space: pre;
+  overflow: auto;
+  overflow-wrap: normal;
+}
+.log-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+  color: #999baa;
+  font-size: 11px;
+}
+.log-filter input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #343541;
+  border-radius: 8px;
+  background: #111218;
+  color: #e8eaf0;
+  font: inherit;
+  font-size: 12px;
+}
+.log-filter input:focus {
+  border-color: #7768ed;
+  outline: none;
+}
+.log-filter input::placeholder {
+  color: #656777;
+}
+@media (max-width: 1000px) {
+  .log-formatter {
+    grid-template-columns: 1fr;
+  }
+  .log-input-panel,
+  .log-output-panel {
+    min-height: auto;
+  }
+}

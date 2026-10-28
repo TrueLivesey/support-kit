@@ -1,0 +1,134 @@
+.ticket-formatter {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 35px;
+}
+
+.formatter-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #2c2d38;
+  border-radius: 13px;
+  background: #17181f;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 17px;
+}
+
+.panel-heading h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.panel-heading span {
+  color: #999baa;
+  font-size: 11px;
+}
+
+.formatter-textarea,
+.formatter-result {
+  width: 100%;
+  min-height: 300px;
+  height: 100%;
+  margin: 0;
+  padding: 14px;
+  border: 1px solid #343541;
+  border-radius: 8px;
+  background: #111218;
+  color: #e8eaf0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  tab-size: 2;
+  overflow-wrap: anywhere;
+}
+
+.formatter-textarea {
+  resize: vertical;
+}
+
+.formatter-textarea::placeholder {
+  color: #656777;
+}
+
+.formatter-textarea:focus {
+  border-color: #7768ed;
+  outline: none;
+}
+
+.formatter-result {
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.primary-button,
+.formatter-panel .secondary-button {
+  padding: 10px 13px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: #7768ed;
+  color: white;
+}
+
+.primary-button:hover {
+  background: #6859d9;
+}
+
+.formatter-panel .secondary-button {
+  border-color: #393a48;
+  background: #20212a;
+  color: #c8c9d5;
+}
+
+.formatter-panel .secondary-button:hover {
+  background: #2a2b37;
+}
+
+.formatter-message {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #a9a0ff;
+  font-size: 12px;
+}
+
+@media (max-width: 1000px) {
+  .ticket-formatter {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .formatter-panel {
+    padding: 14px;
+  }
+
+  .formatter-textarea,
+  .formatter-result {
+    min-height: 230px;
+  }
+
+  .panel-actions button {
+    flex: 1;
+  }
+}
