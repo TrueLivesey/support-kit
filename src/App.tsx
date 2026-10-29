@@ -6,6 +6,7 @@ import { JsonFormatter } from "./features/json-formatter/JsonFormatter";
 import { TimestampConverter } from "./features/timestamp-converter/TimestampConverter";
 import { RussiaTimeZones } from "./features/russia-time-zones/RussiaTimeZones";
 import { PaymentFormatter } from "./features/payment-formatter/PaymentFormatter";
+import { LogAnalyzer } from "./features/log-analyzer/LogAnalyzer";
 
 const tools = [
   {
@@ -28,6 +29,13 @@ const tools = [
     description: "Подготовка логов с сохранением переносов строк",
     category: "Логи",
     icon: "⌘",
+  },
+  {
+    id: "log-analyzer",
+    title: "Анализ аварийных логов",
+    description: "Локальная хронология, фильтры и подсказки по ошибкам",
+    category: "Логи",
+    icon: "⌕",
   },
   {
     id: "json",
@@ -118,6 +126,13 @@ function App() {
               <span>⌘</span>
               Форматирование логов
             </button>
+            <button
+              className={`nav-item ${activeTool === "log-analyzer" ? "active" : ""}`}
+              onClick={() => navigate("log-analyzer")}
+            >
+              <span>⌕</span>
+              Анализ аварийных логов
+            </button>
           </div>
 
           <div className="nav-group">
@@ -178,6 +193,8 @@ function App() {
               <PaymentFormatter />
             ) : selectedTool.id === "logs" ? (
               <LogFormatter />
+            ) : selectedTool.id === "log-analyzer" ? (
+              <LogAnalyzer />
             ) : selectedTool.id === "json" ? (
               <JsonFormatter />
             ) : selectedTool.id === "timestamp" ? (
