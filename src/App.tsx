@@ -7,6 +7,7 @@ import { TimestampConverter } from "./features/timestamp-converter/TimestampConv
 import { RussiaTimeZones } from "./features/russia-time-zones/RussiaTimeZones";
 import { PaymentFormatter } from "./features/payment-formatter/PaymentFormatter";
 import { LogAnalyzer } from "./features/log-analyzer/LogAnalyzer";
+import { TimeCalculator } from "./features/time-calculator/TimeCalculator";
 
 const tools = [
   {
@@ -50,6 +51,13 @@ const tools = [
     description: "Преобразование Unix Timestamp в дату",
     category: "Данные",
     icon: "◷",
+  },
+  {
+    id: "time-calculator",
+    title: "Калькулятор времени",
+    description: "Расчёт промежутка между двумя датами и временем",
+    category: "Данные",
+    icon: "◴",
   },
   {
     id: "russia-time-zones",
@@ -199,6 +207,8 @@ function App() {
               <JsonFormatter />
             ) : selectedTool.id === "timestamp" ? (
               <TimestampConverter />
+            ) : selectedTool.id === "time-calculator" ? (
+              <TimeCalculator />
             ) : selectedTool.id === "russia-time-zones" ? (
               <RussiaTimeZones />
             ) : (
