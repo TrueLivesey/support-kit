@@ -5,12 +5,12 @@ import "./PaymentFormatter.css";
 const example = `Платёж Аванс
 23.10.2026
 15:30
-0.10 ₽
+0.10\u00a0₽
 
 Начисление
 23.10.2026
 15:32
--0.10 ₽`;
+-0.10\u00a0₽`;
 
 export function PaymentFormatter() {
   const [input, setInput] = useState("");
@@ -32,7 +32,7 @@ export function PaymentFormatter() {
     }
     try {
       await navigator.clipboard.writeText(result);
-      setMessage("Результат скопирован");
+      setMessage("\u00a0езультат скопирован");
     } catch {
       setMessage("Не удалось скопировать. Проверьте разрешения браузера");
     }
@@ -69,7 +69,7 @@ export function PaymentFormatter() {
       </div>
       <div className="formatter-panel">
         <div className="panel-heading">
-          <h2>Результат</h2>
+          <h2>\u00a0езультат</h2>
           <span>Вывод</span>
         </div>
         <pre className="formatter-result">
