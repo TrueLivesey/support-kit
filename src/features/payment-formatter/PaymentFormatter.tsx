@@ -32,7 +32,7 @@ export function PaymentFormatter() {
     }
     try {
       await navigator.clipboard.writeText(result);
-      setMessage("\u00a0езультат скопирован");
+      setMessage("Результат скопирован");
     } catch {
       setMessage("Не удалось скопировать. Проверьте разрешения браузера");
     }
@@ -69,7 +69,7 @@ export function PaymentFormatter() {
       </div>
       <div className="formatter-panel">
         <div className="panel-heading">
-          <h2>\u00a0езультат</h2>
+          <h2>Результат</h2>
           <span>Вывод</span>
         </div>
         <pre className="formatter-result">

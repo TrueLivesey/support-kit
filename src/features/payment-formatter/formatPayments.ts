@@ -11,12 +11,16 @@ export function formatPayments(input: string): string {
   for (let index = 0; index < lines.length;) {
     const name = lines[index];
     const date = lines[index + 1];
-    const time = lines[index + 2];
-    const amount = lines[index + 3];
+    const next = lines[index + 2];
 
-    if (date && DATE_LINE.test(date) && time && TIME_LINE.test(time) && amount) {
-      result.push(`${name} ${date} ${time} ${amount}`);
-      index += 4;
+    if (date && DATE_LINE.test(date) && next) {
+      if (TIME_LINE.test(next) && lines[index + 3]) {
+        result.push(`${name} ${date} ${next} ${lines[index + 3]}`);
+        index += 4;
+      } else {
+        result.push(`${name} ${date} ${next}`);
+        index += 3;
+      }
     } else {
       result.push(name);
       index += 1;

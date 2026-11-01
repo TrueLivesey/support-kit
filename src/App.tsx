@@ -121,7 +121,7 @@ function App() {
               onClick={() => navigate("tickets")}
             >
               <span>▤</span>
-              Форматирование
+              Форматирование заявок
             </button>
           </div>
 
@@ -150,7 +150,7 @@ function App() {
               onClick={() => navigate("payments")}
             >
               <span>₽</span>
-              Форматирование
+              Форматирование Финансов
             </button>
           </div>
 
