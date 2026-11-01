@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import "./LogFormatter.css";
 
 const sample =
@@ -6,32 +6,50 @@ const sample =
 
 export function LogFormatter() {
   const [input, setInput] = useState("");
+  const [formattedLines, setFormattedLines] = useState<string[]>([]);
   const [filter, setFilter] = useState("");
   const [message, setMessage] = useState("");
-  const formatted = useMemo(
-    () => input.replace(/\r\n?/g, "\n").trimEnd(),
-    [input],
-  );
-  const filtered = useMemo(() => {
-    if (!filter.trim()) return formatted;
+  const outputRef = useRef<HTMLPreElement>(null);
+  const filteredLines = useMemo(() => {
+    if (!filter.trim()) return formattedLines;
     const query = filter.trim().toLocaleLowerCase();
-    return formatted
-      .split("\n")
+    return formattedLines
       .filter((line) => line.toLocaleLowerCase().includes(query))
-      .join("\n");
-  }, [filter, formatted]);
+  }, [filter, formattedLines]);
+
+  function formatInput() {
+    const lines = input.split(/\r?\n/).filter((line) => line.trim() !== "");
+    setFormattedLines(lines);
+    setFilter("");
+    setMessage(lines.length ? "Форматирование завершено" : "Нет строк для форматирования");
+  }
 
   function clearInput() {
     setInput("");
     setMessage("");
   }
   async function copyOutput() {
-    if (!filtered) {
+    const preElement = outputRef.current;
+    if (!preElement || !filteredLines.length) {
       setMessage("Нет строк для копирования");
       return;
     }
+
+    const selection = window.getSelection();
+    if (selection) {
+      const range = document.createRange();
+      range.selectNode(preElement);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      const copied = document.execCommand("copy");
+      selection.removeAllRanges();
+      if (copied) {
+        setMessage("Результат скопирован с форматированием");
+        return;
+      }
+    }
     try {
-      await navigator.clipboard.writeText(filtered);
+      await navigator.clipboard.writeText(filteredLines.join("\n"));
       setMessage("Результат скопирован");
     } catch {
       setMessage("Не удалось скопировать. Проверьте разрешения браузера");
@@ -57,8 +75,11 @@ export function LogFormatter() {
           aria-label="Исходные логи"
         />
         <div className="panel-actions">
+          <button className="primary-button" onClick={formatInput}>
+            Форматировать
+          </button>
           <button
-            className="primary-button"
+            className="secondary-button"
             onClick={() => {
               setInput(sample);
               setMessage("Пример загружен");
@@ -74,7 +95,7 @@ export function LogFormatter() {
       <div className="formatter-panel log-output-panel">
         <div className="panel-heading">
           <h2>Форматированный вывод</h2>
-          <span>{filtered ? filtered.split("\n").length : 0} строк</span>
+          <span>{filteredLines.length} строк</span>
         </div>
         <label className="log-filter">
           Фильтр строк
@@ -85,12 +106,23 @@ export function LogFormatter() {
             aria-label="Фильтр строк"
           />
         </label>
-        <pre className="formatter-result log-result">
-          {filtered ||
-            (input
+        {filteredLines.length ? (
+          <pre className="formatter-result log-result" ref={outputRef}>
+            {filteredLines.map((line, index) => (
+              <span className="pre-result-el" key={`${index}-${line}`}>
+                {line}{index < filteredLines.length - 1 ? "\n" : ""}
+              </span>
+            ))}
+          </pre>
+        ) : (
+          <pre className="formatter-result log-result">
+            {formattedLines.length
               ? "Совпадений не найдено"
-              : "Вставьте логи или загрузите пример")}
-        </pre>
+              : input
+                ? "Нажмите «Форматировать», чтобы получить результат"
+                : "Вставьте логи или загрузите пример"}
+          </pre>
+        )}
         <div className="panel-actions">
           <button className="primary-button" onClick={copyOutput}>
             Скопировать результат
@@ -98,11 +130,12 @@ export function LogFormatter() {
           <button
             className="secondary-button"
             onClick={() => {
+              setFormattedLines([]);
               setFilter("");
-              setMessage("Фильтр очищен");
+              setMessage("Результат очищен");
             }}
           >
-            Сбросить фильтр
+            Очистить результат
           </button>
         </div>
       </div>

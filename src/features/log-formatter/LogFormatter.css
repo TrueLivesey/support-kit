@@ -10,10 +10,16 @@
 }
 .log-result {
   flex: 1;
-  min-height: 300px;
-  white-space: pre;
+  height: min(550px, 60vh);
+  min-height: 240px;
+  max-height: 550px;
+  box-sizing: border-box;
+  white-space: pre-wrap;
   overflow: auto;
-  overflow-wrap: normal;
+  overflow-wrap: anywhere;
+}
+.pre-result-el {
+  white-space: pre-wrap;
 }
 .log-filter {
   display: flex;
