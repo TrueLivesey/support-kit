@@ -3,7 +3,6 @@ import "./App.css";
 import { TicketFormatter } from "./features/ticket-formatter/TicketFormatter";
 import { LogFormatter } from "./features/log-formatter/LogFormatter";
 import { JsonFormatter } from "./features/json-formatter/JsonFormatter";
-import { TimestampConverter } from "./features/timestamp-converter/TimestampConverter";
 import { RussiaTimeZones } from "./features/russia-time-zones/RussiaTimeZones";
 import { PaymentFormatter } from "./features/payment-formatter/PaymentFormatter";
 import { LogAnalyzer } from "./features/log-analyzer/LogAnalyzer";
@@ -46,13 +45,6 @@ const tools = [
     icon: "{}",
   },
   {
-    id: "timestamp",
-    title: "Конвертер времени",
-    description: "Преобразование Unix Timestamp в дату",
-    category: "Данные",
-    icon: "◷",
-  },
-  {
     id: "time-calculator",
     title: "Калькулятор времени",
     description: "Расчёт промежутка между двумя датами и временем",
@@ -87,12 +79,6 @@ function App() {
     return () => window.removeEventListener("hashchange", syncRoute);
   }, []);
 
-  const navigate = (toolId: string | null) => {
-    const nextHash = toolId ? `#/tools/${toolId}` : "#/";
-    if (window.location.hash !== nextHash) window.location.hash = nextHash;
-    setActiveTool(toolId);
-  };
-
   const selectedTool = tools.find((tool) => tool.id === activeTool);
 
   return (
@@ -106,52 +92,52 @@ function App() {
         <div className="sidebar-label">РАБОЧЕЕ ПРОСТРАНСТВО</div>
 
         <nav className="navigation">
-          <button
+          <a
             className={`nav-item ${activeTool === null ? "active" : ""}`}
-            onClick={() => navigate(null)}
+            href="#/"
           >
             <span>▦</span>
             Все инструменты
-          </button>
+          </a>
 
           <div className="nav-group">
             <span className="nav-group-title">Заявки</span>
-            <button
+            <a
               className={`nav-item ${activeTool === "tickets" ? "active" : ""}`}
-              onClick={() => navigate("tickets")}
+              href="#/tools/tickets"
             >
               <span>▤</span>
               Форматирование заявок
-            </button>
+            </a>
           </div>
 
           <div className="nav-group">
             <span className="nav-group-title">Логи</span>
-            <button
+            <a
               className={`nav-item ${activeTool === "logs" ? "active" : ""}`}
-              onClick={() => navigate("logs")}
+              href="#/tools/logs"
             >
               <span>⌘</span>
               Форматирование логов
-            </button>
-            <button
+            </a>
+            <a
               className={`nav-item ${activeTool === "log-analyzer" ? "active" : ""}`}
-              onClick={() => navigate("log-analyzer")}
+              href="#/tools/log-analyzer"
             >
               <span>⌕</span>
               Анализ аварийных логов
-            </button>
+            </a>
           </div>
 
           <div className="nav-group">
             <span className="nav-group-title">Начисления и платежи</span>
-            <button
+            <a
               className={`nav-item ${activeTool === "payments" ? "active" : ""}`}
-              onClick={() => navigate("payments")}
+              href="#/tools/payments"
             >
               <span>₽</span>
               Форматирование Финансов
-            </button>
+            </a>
           </div>
 
           <div className="nav-group">
@@ -159,14 +145,14 @@ function App() {
             {tools
               .filter((tool) => tool.category === "Данные")
               .map((tool) => (
-                <button
+                <a
                   key={tool.id}
                   className={`nav-item ${activeTool === tool.id ? "active" : ""}`}
-                  onClick={() => navigate(tool.id)}
+                  href={`#/tools/${tool.id}`}
                 >
                   <span>{tool.icon}</span>
                   {tool.title}
-                </button>
+                </a>
               ))}
           </div>
         </nav>
@@ -205,8 +191,6 @@ function App() {
               <LogAnalyzer />
             ) : selectedTool.id === "json" ? (
               <JsonFormatter />
-            ) : selectedTool.id === "timestamp" ? (
-              <TimestampConverter />
             ) : selectedTool.id === "time-calculator" ? (
               <TimeCalculator />
             ) : selectedTool.id === "russia-time-zones" ? (
@@ -219,12 +203,12 @@ function App() {
                   Скоро здесь появится функциональность:
                   {` ${selectedTool.title.toLowerCase()}.`}
                 </p>
-                <button
+                <a
                   className="secondary-button"
-                  onClick={() => setActiveTool(null)}
+                  href="#/"
                 >
                   ← Все инструменты
-                </button>
+                </a>
               </section>
             )
           ) : (
@@ -236,10 +220,10 @@ function App() {
 
               <div className="tools-grid">
                 {tools.map((tool) => (
-                  <button
+                  <a
                     key={tool.id}
                     className="tool-card"
-                    onClick={() => navigate(tool.id)}
+                    href={`#/tools/${tool.id}`}
                   >
                     <div className="tool-card-top">
                       <span className="tool-icon">{tool.icon}</span>
@@ -249,7 +233,7 @@ function App() {
                     <span className="tool-category">{tool.category}</span>
                     <span className="tool-title">{tool.title}</span>
                     <span className="tool-description">{tool.description}</span>
-                  </button>
+                  </a>
                 ))}
               </div>
             </>

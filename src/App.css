@@ -65,6 +65,7 @@
   text-align: left;
   font-size: 13px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .nav-item > span {
@@ -204,6 +205,8 @@
   background: #17181f;
   text-align: left;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
   transition:
     border-color 160ms ease,
     background 160ms ease;
@@ -299,6 +302,9 @@
   border-radius: 8px;
   background: #20212a;
   cursor: pointer;
+  color: #a6a7b5;
+  text-decoration: none;
+  font: inherit;
 }
 
 .secondary-button:hover {
