@@ -7,6 +7,7 @@ import { RussiaTimeZones } from "./features/russia-time-zones/RussiaTimeZones";
 import { PaymentFormatter } from "./features/payment-formatter/PaymentFormatter";
 import { LogAnalyzer } from "./features/log-analyzer/LogAnalyzer";
 import { TimeCalculator } from "./features/time-calculator/TimeCalculator";
+import { TextTools } from "./features/text-tools/TextTools";
 
 const tools = [
   {
@@ -43,6 +44,13 @@ const tools = [
     description: "Проверка и форматирование JSON",
     category: "Данные",
     icon: "{}",
+  },
+  {
+    id: "text-tools",
+    title: "Типограф и регистр",
+    description: "Типографика и преобразование регистра текста",
+    category: "Текст",
+    icon: "Aa",
   },
   {
     id: "time-calculator",
@@ -141,6 +149,22 @@ function App() {
           </div>
 
           <div className="nav-group">
+            <span className="nav-group-title">Текст</span>
+            {tools
+              .filter((tool) => tool.category === "Текст")
+              .map((tool) => (
+                <a
+                  key={tool.id}
+                  className={`nav-item ${activeTool === tool.id ? "active" : ""}`}
+                  href={`#/tools/${tool.id}`}
+                >
+                  <span>{tool.icon}</span>
+                  {tool.title}
+                </a>
+              ))}
+          </div>
+
+          <div className="nav-group">
             <span className="nav-group-title">Данные</span>
             {tools
               .filter((tool) => tool.category === "Данные")
@@ -191,6 +215,8 @@ function App() {
               <LogAnalyzer />
             ) : selectedTool.id === "json" ? (
               <JsonFormatter />
+            ) : selectedTool.id === "text-tools" ? (
+              <TextTools />
             ) : selectedTool.id === "time-calculator" ? (
               <TimeCalculator />
             ) : selectedTool.id === "russia-time-zones" ? (
