@@ -14,49 +14,49 @@ const tools = [
     id: "tickets",
     title: "Форматирование заявок",
     description: "Преобразование строк в удобный формат",
-    category: "Заявки",
+    category: "Форматирование",
     icon: "▤",
   },
   {
     id: "payments",
     title: "Начисления и платежи",
     description: "Форматирование списка платежей и начислений",
-    category: "Начисления и платежи",
+    category: "Форматирование",
     icon: "₽",
   },
   {
     id: "logs",
     title: "Форматирование логов",
     description: "Подготовка логов с сохранением переносов строк",
-    category: "Логи",
+    category: "Форматирование",
     icon: "⌘",
   },
   {
     id: "log-analyzer",
     title: "Анализ аварийных логов",
     description: "Локальная хронология, фильтры и подсказки по ошибкам",
-    category: "Логи",
+    category: "Аварии",
     icon: "⌕",
   },
   {
     id: "json",
     title: "JSON Formatter",
     description: "Проверка и форматирование JSON",
-    category: "Данные",
+    category: "Форматирование",
     icon: "{}",
   },
   {
     id: "text-tools",
     title: "Типограф и регистр",
     description: "Типографика и преобразование регистра текста",
-    category: "Текст",
+    category: "Форматирование",
     icon: "Aa",
   },
   {
     id: "time-calculator",
     title: "Калькулятор времени",
     description: "Расчёт промежутка между двумя датами и временем",
-    category: "Данные",
+    category: "Аварии",
     icon: "◴",
   },
   {
@@ -108,77 +108,23 @@ function App() {
             Все инструменты
           </a>
 
-          <div className="nav-group">
-            <span className="nav-group-title">Заявки</span>
-            <a
-              className={`nav-item ${activeTool === "tickets" ? "active" : ""}`}
-              href="#/tools/tickets"
-            >
-              <span>▤</span>
-              Форматирование заявок
-            </a>
-          </div>
-
-          <div className="nav-group">
-            <span className="nav-group-title">Логи</span>
-            <a
-              className={`nav-item ${activeTool === "logs" ? "active" : ""}`}
-              href="#/tools/logs"
-            >
-              <span>⌘</span>
-              Форматирование логов
-            </a>
-            <a
-              className={`nav-item ${activeTool === "log-analyzer" ? "active" : ""}`}
-              href="#/tools/log-analyzer"
-            >
-              <span>⌕</span>
-              Анализ аварийных логов
-            </a>
-          </div>
-
-          <div className="nav-group">
-            <span className="nav-group-title">Начисления и платежи</span>
-            <a
-              className={`nav-item ${activeTool === "payments" ? "active" : ""}`}
-              href="#/tools/payments"
-            >
-              <span>₽</span>
-              Форматирование Финансов
-            </a>
-          </div>
-
-          <div className="nav-group">
-            <span className="nav-group-title">Текст</span>
-            {tools
-              .filter((tool) => tool.category === "Текст")
-              .map((tool) => (
-                <a
-                  key={tool.id}
-                  className={`nav-item ${activeTool === tool.id ? "active" : ""}`}
-                  href={`#/tools/${tool.id}`}
-                >
-                  <span>{tool.icon}</span>
-                  {tool.title}
-                </a>
-              ))}
-          </div>
-
-          <div className="nav-group">
-            <span className="nav-group-title">Данные</span>
-            {tools
-              .filter((tool) => tool.category === "Данные")
-              .map((tool) => (
-                <a
-                  key={tool.id}
-                  className={`nav-item ${activeTool === tool.id ? "active" : ""}`}
-                  href={`#/tools/${tool.id}`}
-                >
-                  <span>{tool.icon}</span>
-                  {tool.title}
-                </a>
-              ))}
-          </div>
+          {[...new Set(tools.map((tool) => tool.category))].map((category) => (
+            <div className="nav-group" key={category}>
+              <span className="nav-group-title">{category}</span>
+              {tools
+                .filter((tool) => tool.category === category)
+                .map((tool) => (
+                  <a
+                    key={tool.id}
+                    className={`nav-item ${activeTool === tool.id ? "active" : ""}`}
+                    href={`#/tools/${tool.id}`}
+                  >
+                    <span>{tool.icon}</span>
+                    {tool.title}
+                  </a>
+                ))}
+            </div>
+          ))}
         </nav>
 
         <div className="sidebar-footer">
